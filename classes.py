@@ -35,12 +35,13 @@ class Nps(Cell):
     def searching_for_food(world_map: list):
         radius = 1
         while True:
-            for PositionY in range(1, radius + 1):
-                for PositionX in range(1, radius + 1):
+            for PositionY in range(radius):
+                for PositionX in range(radius):
                     try:
-                        if world_map[PositionY - 1][PositionX - 1] == 2:
-                            return [PositionY - 1, PositionX - 1]
+                        if world_map[PositionY][PositionX] == 2:
+                            return [PositionX + 1, PositionY + 1]
                     except IndexError:
                         return None
             else:
                 radius += 1
+
