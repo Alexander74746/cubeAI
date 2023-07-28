@@ -1,7 +1,36 @@
 import sys
 from random import randint
 from time import time
-from config import MapSize, FoodList, NewMap
+from config import MapSize, FoodList, NpsList, NewMap
+from colorama import Fore, Style
+
+
+def frame():
+    p_map = ''
+    for line in NewMap:
+        for sym in line:
+            match sym:
+                case 0:
+                    p_map += Fore.GREEN + str(sym) + Style.RESET_ALL
+                case 1:
+                    p_map += Fore.BLUE + str(sym) + Style.RESET_ALL
+                case 2:
+                    p_map += Fore.RED + str(sym) + Style.RESET_ALL
+            p_map += "  "
+        p_map += "\n"
+
+    lives = ''
+
+    for nps in NpsList:
+        lives += f"Number: {nps.Number}; Lives: {nps.Live}\n"
+
+    p_message = f"{'-' * MapSize[0] * 5}+\n" \
+                f"{p_map}" \
+                f"{'-' * MapSize[0] * 5}+\n" \
+                f"{lives}" \
+                f"{'-' * MapSize[0] * 5}+\n"
+
+    print(p_message)
 
 
 class Cell:
@@ -120,12 +149,5 @@ class Nps(Cell):
                 else:
                     continue
             self.moving(direction)
-            print(f"----------\n"
-                  f"go №{self.Number}, lives:{self.Live}\n"
-                  f"----------\n"
-                  f"{str(NewMap[0])}\n"
-                  f"{str(NewMap[1])}\n"
-                  f"{str(NewMap[2])}\n"
-                  f"{str(NewMap[3])}\n"
-                  f"{str(NewMap[4])}\n"
-                  f"----------")
+
+            frame()
