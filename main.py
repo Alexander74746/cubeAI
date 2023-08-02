@@ -1,5 +1,6 @@
-from config import StartMap, MapSize, FoodList, NpsList
-from classes import Nps, Food
+from config import StartMap, MapSize, FoodList, NpsList, SimulationSpeed
+from classes import Nps, Food, frame
+from time import time
 
 if __name__ == "__main__":
     NpsNumber = 1
@@ -15,7 +16,16 @@ if __name__ == "__main__":
                 FoodList.append(Food([PositionX + 1, PositionY + 1], FoodNumber))
                 FoodNumber += 1
 
+    frame()
+    FrameTimer = time()
     RunFlag = True
     while RunFlag:
-        for Nps in NpsList:
-            Nps.going()
+        if time() - FrameTimer >= SimulationSpeed:
+            FrameTimer = time()
+            for Nps in NpsList:
+                Nps.activity()
+            frame()
+            if not NpsList:
+                print("Restart the program, please.")
+                i = input()
+                RunFlag = False
